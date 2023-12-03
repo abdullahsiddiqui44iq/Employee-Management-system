@@ -105,7 +105,8 @@ public class Dashboard extends JFrame implements ActionListener  {
         Exit.setForeground(Color.LIGHT_GRAY);
         
         
-
+        addEmployee.addActionListener(this);
+        viewProfile.addActionListener(this);
 
        
 
@@ -116,7 +117,7 @@ public class Dashboard extends JFrame implements ActionListener  {
     public void actionPerformed(ActionEvent ae){
         String msg = ae.getActionCommand();
         if(msg.equals("View Profile")){
-            new ViewProfile().setVisible(true);
+            new ViewProfile();
         }
         else if(msg.equals("Add Employee")){
             new AddEmployee();
@@ -125,25 +126,25 @@ public class Dashboard extends JFrame implements ActionListener  {
             new UpdateDetails().setVisible(true);
         }
         else if(msg.equals("View Attendance")){
-            new ViewAttendance().setVisible(true);
+            // new ViewAttendance().setVisible(true);
         }
         else if(msg.equals("Take Attendance")){
-            new TakeAttendance().setVisible(true);
+            // new TakeAttendance().setVisible(true);
         }
         else if(msg.equals("Apply Leave")){
-            new ApplyLeave().setVisible(true);
+            // new ApplyLeave().setVisible(true);
         }
         else if(msg.equals("View Leave")){
-            new ViewLeave().setVisible(true);
+            // new ViewLeave().setVisible(true);
         }
         else if(msg.equals("Add Salary")){
-            new AddSalary().setVisible(true);
+            // new AddSalary().setVisible(true);
         }
         else if(msg.equals("Generate Salary Slip")){
-            new GenerateSalarySlip().setVisible(true);
+            // new GenerateSalarySlip().setVisible(true);
         }
         else if(msg.equals("Delete Employee")){
-            new DeleteEmployee().setVisible(true);
+            // new DeleteEmployee().setVisible(true);
         }
         else if(msg.equals("Logout")){
             new Login().setVisible(true);

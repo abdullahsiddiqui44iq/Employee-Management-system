@@ -6,29 +6,33 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
-
-
 import javax.swing.*;
 
+import com.mysql.cj.jdbc.CallableStatement;
 import com.toedter.calendar.JDateChooser;
 
 public class AddEmployee implements ActionListener {
     JFrame frame;
-    JLabel mainHeading, nameLabel, ageLabel, addressLabel, phoneLabel, emailLabel, designationLabel, departmentLabel, employeeIdLabel, fatherNameLabel, dobLabel;
-    JTextField nameField, ageField, addressField, phoneField, emailField, designationField, employeeIdTextField, fatherNamTextField;
+    JLabel mainHeading, nameLabel, ageLabel, addressLabel, phoneLabel, emailLabel, designationLabel, departmentLabel,
+            employeeIdLabel, fatherNameLabel, dobLabel;
+    JTextField nameField, ageField, addressField, phoneField, emailField, designationField, employeeIdTextField,
+            fatherNamTextField;
     JComboBox departmentComboBox;
     JDateChooser dobField;
-    String[] departments = {"HR", "IT", "Finance", "Marketing", "Sales", "Management"};
+    String[] departments = { "HR", "IT", "Finance", "Marketing", "Sales", "Management" };
 
     JButton submitButton, cancelButton;
+
     AddEmployee() {
         frame = new JFrame("Add Employee");
         frame.setBackground(Color.WHITE);
         frame.setLayout(null);
         frame.setSize(900, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/18940.jpg").getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT));
+
+        ImageIcon backgroundImage = new ImageIcon(new ImageIcon(
+                "/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/18940.jpg")
+                .getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT));
         JLabel l1 = new JLabel(backgroundImage);
         l1.setBounds(0, 0, 900, 600);
         frame.add(l1);
@@ -36,7 +40,7 @@ public class AddEmployee implements ActionListener {
         mainHeading = new JLabel("New Employee Details");
         mainHeading.setBounds(300, 30, 500, 50);
         mainHeading.setFont(new Font("Arial", Font.BOLD, 30));
-        mainHeading.setForeground(Color.BLACK   );
+        mainHeading.setForeground(Color.BLACK);
         l1.add(mainHeading);
 
         nameLabel = new JLabel("Name");
@@ -57,11 +61,11 @@ public class AddEmployee implements ActionListener {
         ageLabel.setForeground(Color.BLACK);
         l1.add(ageLabel);
 
-        ageField = new JTextField();
-        ageField.setBounds(200, 200, 150, 30);
-        ageField.setFont(new Font("Arial", Font.BOLD, 20));
-        ageField.setForeground(Color.BLACK);
-        l1.add(ageField);
+        // ageField = new JTextField();
+        // ageField.setBounds(200, 200, 150, 30);
+        // ageField.setFont(new Font("Arial", Font.BOLD, 20));
+        // ageField.setForeground(Color.BLACK);
+        // l1.add(ageField);
 
         addressLabel = new JLabel("Address");
         addressLabel.setBounds(50, 250, 150, 30);
@@ -111,7 +115,7 @@ public class AddEmployee implements ActionListener {
         designationField.setForeground(Color.BLACK);
         l1.add(designationField);
 
-        //next column
+        // next column
 
         fatherNameLabel = new JLabel("Father Name");
         fatherNameLabel.setBounds(450, 150, 150, 30);
@@ -125,14 +129,20 @@ public class AddEmployee implements ActionListener {
         fatherNamTextField.setForeground(Color.BLACK);
         l1.add(fatherNamTextField);
 
-
         employeeIdLabel = new JLabel("Employee ID");
         employeeIdLabel.setBounds(450, 200, 150, 30);
         employeeIdLabel.setFont(new Font("Arial", Font.BOLD, 20));
         employeeIdLabel.setForeground(Color.BLACK);
         l1.add(employeeIdLabel);
 
-
+        //textfield with a place holder that says "Auto Generated"
+        employeeIdTextField = new JTextField();
+        employeeIdTextField.setBounds(650, 200, 150, 30);
+        employeeIdTextField.setFont(new Font("Arial", Font.PLAIN, 16));
+        employeeIdTextField.setForeground(Color.BLACK);
+        employeeIdTextField.setText("Auto Generated");
+        employeeIdTextField.setEditable(false);
+        l1.add(employeeIdTextField);
 
         dobLabel = new JLabel("Date of Birth");
         dobLabel.setBounds(450, 250, 150, 30);
@@ -145,10 +155,6 @@ public class AddEmployee implements ActionListener {
         dobField.setDateFormatString("yyyy-MM-dd");
         l1.add(dobField);
 
-
-
-        
-
         departmentLabel = new JLabel("Department");
         departmentLabel.setBounds(450, 300, 150, 30);
         departmentLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -160,12 +166,6 @@ public class AddEmployee implements ActionListener {
         departmentComboBox.setFont(new Font("Arial", Font.PLAIN, 20));
         departmentComboBox.setForeground(Color.BLACK);
         l1.add(departmentComboBox);
-
-        // dobField = new JTextField();
-        // dobField.setBounds(650, 250, 150, 30);
-        // dobField.setFont(new Font("Arial", Font.BOLD, 20));
-        // dobField.setForeground(Color.BLACK);
-        // l1.add(dobField);
 
         submitButton = new JButton("Submit");
         submitButton.setBounds(250, 480, 150, 40);
@@ -183,26 +183,17 @@ public class AddEmployee implements ActionListener {
         cancelButton.addActionListener((ActionListener) this);
         l1.add(cancelButton);
 
-
-
-
-
-        
-        
-
         frame.setLocation(500, 250);
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        new AddEmployee();   
+        new AddEmployee();
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == submitButton) {
+        if (e.getSource() == submitButton) {
             String name = nameField.getText();
-            String age = ageField.getText();
             String address = addressField.getText();
             String email = emailField.getText();
             String phone = phoneField.getText();
@@ -211,33 +202,31 @@ public class AddEmployee implements ActionListener {
             LocalDate dob = dobField.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
             String department = (String) departmentComboBox.getSelectedItem();
 
-            PreparedStatement ps;
             try {
                 Connectionclass connection = new Connectionclass();
-                ps = connection.conn.prepareStatement("INSERT INTO Employee (name, father_name, age, address, email, phone, designation, date_of_birth, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                ps.setString(1, name);
-                ps.setString(2, fatherName);
-                ps.setString(3, age);
-                ps.setString(4, address);
-                ps.setString(5, email);
-                ps.setString(6, phone);
-                ps.setString(7, designation);
-                ps.setString(8, dob.toString());
-                ps.setString(9, department);
+                try (CallableStatement callableStatement = (CallableStatement) connection.conn
+                        .prepareCall("{CALL InsertEmployeeWithAge(?, ?, ?, ?, ?, ?, ?, ?)}")) {
+                    callableStatement.setString(1, name);
+                    callableStatement.setString(2, fatherName);
+                    callableStatement.setString(3, address);
+                    callableStatement.setString(4, email);
+                    callableStatement.setString(5, phone);
+                    callableStatement.setString(6, designation);
+                    callableStatement.setDate(7, java.sql.Date.valueOf(dob));
+                    callableStatement.setString(8, department);
 
+                    callableStatement.execute();
 
-                
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(frame, "Employee added successfully");
-                frame.setVisible(false);
-                new Dashboard();
+                    JOptionPane.showMessageDialog(null, "Employee added successfully");
+                    frame.setVisible(false);
+                    new Dashboard();
+                }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error adding employee: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Print the stack trace for debugging purposes
             }
-            
-            
-        }
-        else if(e.getSource() == cancelButton) {
+        } else if (e.getSource() == cancelButton) {
             frame.setVisible(false);
             new Dashboard();
         }
