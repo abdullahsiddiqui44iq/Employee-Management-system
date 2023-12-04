@@ -30,13 +30,14 @@ public class Dashboard extends JFrame implements ActionListener  {
         JMenu Profile = new JMenu("Profile");
         JMenuItem viewProfile = new JMenuItem("View Profile");
         JMenuItem addEmployee = new JMenuItem("Add Employee");
+        JMenuItem ViewAllEmployee = new JMenuItem("View All Employee");
         Profile.add(viewProfile);
         Profile.add(addEmployee);
+        Profile.add(ViewAllEmployee);
         menuBar.add(Profile);
 
         JMenu manage = new JMenu("Manage");
         JMenuItem updateDetails = new JMenuItem("Update details");
-        // JMenuItem updatePassword = new JMenuItem("Update Password");
         manage.add(updateDetails);
         menuBar.add(manage);
 
@@ -85,6 +86,7 @@ public class Dashboard extends JFrame implements ActionListener  {
 
         viewProfile.setFont(meniItemFont);
         addEmployee.setFont(meniItemFont);
+        ViewAllEmployee.setFont(meniItemFont);
         updateDetails.setFont(meniItemFont);
         viewAttendance.setFont(meniItemFont);
         takeAttendance.setFont(meniItemFont);
@@ -107,17 +109,19 @@ public class Dashboard extends JFrame implements ActionListener  {
         
         addEmployee.addActionListener(this);
         viewProfile.addActionListener(this);
+        updateDetails.addActionListener(this);
 
+        logoutItem.addActionListener(this);
        
-
-
-
     }
     
     public void actionPerformed(ActionEvent ae){
         String msg = ae.getActionCommand();
         if(msg.equals("View Profile")){
             new ViewProfile();
+        }
+        else if(msg.equals("View All Employee")){
+            new ViewAllEmployee();
         }
         else if(msg.equals("Add Employee")){
             new AddEmployee();
@@ -126,10 +130,10 @@ public class Dashboard extends JFrame implements ActionListener  {
             new UpdateDetails().setVisible(true);
         }
         else if(msg.equals("View Attendance")){
-            // new ViewAttendance().setVisible(true);
+            new ViewAttendance();
         }
         else if(msg.equals("Take Attendance")){
-            // new TakeAttendance().setVisible(true);
+            new TakeAttendance();
         }
         else if(msg.equals("Apply Leave")){
             // new ApplyLeave().setVisible(true);
@@ -157,3 +161,5 @@ public class Dashboard extends JFrame implements ActionListener  {
         new Dashboard().setVisible(true);
     }
 }
+
+
