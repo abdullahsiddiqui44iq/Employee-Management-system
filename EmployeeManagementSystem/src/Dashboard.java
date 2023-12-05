@@ -136,10 +136,10 @@ public class Dashboard extends JFrame implements ActionListener  {
             new TakeAttendance();
         }
         else if(msg.equals("Apply Leave")){
-            // new ApplyLeave().setVisible(true);
+            new ApplyLeave();
         }
         else if(msg.equals("View Leave")){
-            // new ViewLeave().setVisible(true);
+            new ViewLeave();
         }
         else if(msg.equals("Add Salary")){
             // new AddSalary().setVisible(true);
