@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.*;
@@ -20,10 +22,12 @@ public class AddEmployee implements ActionListener {
     JComboBox departmentComboBox;
     JDateChooser dobField;
     String[] departments = { "HR", "IT", "Finance", "Marketing", "Sales", "Management" };
+    Connectionclass connection;
 
     JButton submitButton, cancelButton;
 
     AddEmployee() {
+        connection = new Connectionclass();
         frame = new JFrame("Add Employee");
         frame.setBackground(Color.WHITE);
         frame.setLayout(null);
@@ -203,7 +207,7 @@ public class AddEmployee implements ActionListener {
             String department = (String) departmentComboBox.getSelectedItem();
 
             try {
-                Connectionclass connection = new Connectionclass();
+                // Connectionclass connection = new Connectionclass();
                 try (CallableStatement callableStatement = (CallableStatement) connection.conn
                         .prepareCall("{CALL InsertEmployeeWithAge(?, ?, ?, ?, ?, ?, ?, ?)}")) {
                     callableStatement.setString(1, name);
@@ -218,14 +222,29 @@ public class AddEmployee implements ActionListener {
                     callableStatement.execute();
 
                     JOptionPane.showMessageDialog(null, "Employee added successfully");
+                    //show the id of the employee that was just added
+                    PreparedStatement ps = connection.conn.prepareStatement("SELECT employee_id FROM Employee WHERE name = ? ANd father_name = ?");
+                    ps.setString(1, name);
+                    ps.setString(2, fatherName);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Employee ID: " + rs.getInt("employee_id"));
+                    }
+
                     frame.setVisible(false);
                     new Dashboard();
                 }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error adding employee: " + ex.getMessage(), "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace(); // Print the stack trace for debugging purposes
+            } catch (SQLException ex) {
+            // Check if the error is due to the phone number validation trigger
+            if (ex.getSQLState().equals("45000")) {
+                JOptionPane.showMessageDialog(null, "Phone number must have exactly 11 digits", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Handle other SQL exceptions
+                JOptionPane.showMessageDialog(null, "Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+
+            ex.printStackTrace(); // Print the stack trace for debugging purposes
+        }
         } else if (e.getSource() == cancelButton) {
             frame.setVisible(false);
             new Dashboard();

@@ -11,8 +11,10 @@ public class ApplyLeave extends JFrame implements ActionListener {
     JComboBox<String> reasonComboBox;
     JButton submitButton, cancelButton;
     JLabel employeeIdLabel, nameLabel, emailLabel, startDateLabel, endDateLabel, reasonLabel;
+    Connectionclass connectionclass;
 
     ApplyLeave() {
+        connectionclass = new Connectionclass();
         setLayout(new FlowLayout());
 
         ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/8934923.jpg").getImage().getScaledInstance(600, 700, Image.SCALE_DEFAULT));
@@ -126,7 +128,7 @@ public class ApplyLeave extends JFrame implements ActionListener {
 
     private void loadEmployeeIds() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT employee_id FROM Employee");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -151,7 +153,7 @@ public class ApplyLeave extends JFrame implements ActionListener {
 
     private void loadEmployeeDetails(String employeeId) {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT name, email FROM Employee WHERE employee_id = ?");
             ps.setString(1, employeeId);
             ResultSet rs = ps.executeQuery();
@@ -181,7 +183,7 @@ public class ApplyLeave extends JFrame implements ActionListener {
                 return;
             }
     
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("INSERT INTO EmployeeLeave (employee_id, start_date, end_date, reason, status) VALUES (?, ?, ?, ?, ?)");
             ps.setString(1, (String) employeeIdComboBox.getSelectedItem());
             ps.setDate(2, new java.sql.Date(startDate.getTime()));

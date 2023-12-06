@@ -10,8 +10,10 @@ public class ViewAttendance extends JFrame implements ActionListener {
     JComboBox<String> employeeIdComboBox;
     JButton searchButton;
     JTable attendanceTable;
+    Connectionclass connectionclass;
 
     ViewAttendance() {
+        connectionclass = new Connectionclass();
         
         ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/print.jpg").getImage().getScaledInstance(700, 700, Image.SCALE_DEFAULT));
         JLabel backgroundImageLabel = new JLabel(backgroundImage);
@@ -50,7 +52,7 @@ public class ViewAttendance extends JFrame implements ActionListener {
 
     private void loadEmployeeIds() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT employee_id FROM Employee");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -64,7 +66,7 @@ public class ViewAttendance extends JFrame implements ActionListener {
 
     private void loadAllAttendance() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT * FROM Attendance");
             ResultSet rs = ps.executeQuery();
             attendanceTable.setModel(buildTableModel(rs));

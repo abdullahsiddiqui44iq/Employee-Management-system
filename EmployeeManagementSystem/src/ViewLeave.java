@@ -10,8 +10,10 @@ public class ViewLeave extends JFrame implements ActionListener {
     JTable leaveTable;
     JLabel employeeIdLabel;
     JButton searchButton;
+    Connectionclass connectionclass;
 
     ViewLeave() {
+        connectionclass = new Connectionclass();
         setLayout(new FlowLayout());
 
         ImageIcon backgroundImage = new ImageIcon(new ImageIcon(
@@ -66,7 +68,7 @@ public class ViewLeave extends JFrame implements ActionListener {
 
     private void loadEmployeeIds() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT employee_id FROM Employee");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -80,7 +82,7 @@ public class ViewLeave extends JFrame implements ActionListener {
 
     private void loadLeaveData() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT * FROM LeaveView");
             ResultSet rs = ps.executeQuery();
 

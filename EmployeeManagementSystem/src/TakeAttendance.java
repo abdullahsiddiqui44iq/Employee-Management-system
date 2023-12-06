@@ -8,10 +8,11 @@ public class TakeAttendance extends JFrame implements ActionListener {
     JLabel employeeIdLabel, nameLabel, emailLabel, firstHalfLabel, secondHalfLabel;
     JTextField nameField, emailField;
     JButton submitButton;
+    Connectionclass connectionclass;
 
     TakeAttendance() {
         
-
+        connectionclass = new Connectionclass();
         ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/3870277.jpg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT));
         JLabel backgroundImageLabel = new JLabel(backgroundImage);
         backgroundImageLabel.setBounds(0, 0, 500, 500);
@@ -104,7 +105,7 @@ public class TakeAttendance extends JFrame implements ActionListener {
 
     private void loadEmployeeIds() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT employee_id FROM Employee");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -127,7 +128,7 @@ public class TakeAttendance extends JFrame implements ActionListener {
 
     private void loadEmployeeDetails(String employeeId) {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT name, email FROM Employee WHERE employee_id = ?");
             ps.setString(1, employeeId);
             ResultSet rs = ps.executeQuery();
@@ -143,7 +144,7 @@ public class TakeAttendance extends JFrame implements ActionListener {
 
     private void insertAttendanceData() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("INSERT INTO Attendance (employee_id, first_half_status, second_half_status, date) VALUES (?, ?, ?, CURDATE())");
             ps.setString(1, (String) employeeIdComboBox.getSelectedItem());
             ps.setString(2, (String) firstHalfComboBox.getSelectedItem());

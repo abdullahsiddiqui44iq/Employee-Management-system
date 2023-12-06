@@ -109,7 +109,14 @@ public class Dashboard extends JFrame implements ActionListener  {
         
         addEmployee.addActionListener(this);
         viewProfile.addActionListener(this);
+        ViewAllEmployee.addActionListener(this);
         updateDetails.addActionListener(this);
+        viewAttendance.addActionListener(this);
+        takeAttendance.addActionListener(this);
+        applyLeave.addActionListener(this);
+        viewLeave.addActionListener(this);
+        addSalary.addActionListener(this);
+        
 
         logoutItem.addActionListener(this);
        
@@ -142,13 +149,13 @@ public class Dashboard extends JFrame implements ActionListener  {
             new ViewLeave();
         }
         else if(msg.equals("Add Salary")){
-            // new AddSalary().setVisible(true);
+            new AddSalary();
         }
         else if(msg.equals("Generate Salary Slip")){
-            // new GenerateSalarySlip().setVisible(true);
+            new GenerateSalarySlip();
         }
         else if(msg.equals("Delete Employee")){
-            // new DeleteEmployee().setVisible(true);
+            new DeleteEmployee();
         }
         else if(msg.equals("Logout")){
             new Login().setVisible(true);

@@ -87,7 +87,7 @@ public class Login extends JFrame implements ActionListener{
                 if(rs.next()){ 
                     JOptionPane.showMessageDialog(loginFrame, "Login Successful");
                     loginFrame.setVisible(false);
-                    // new Dashboard();
+                    new Dashboard();
                 }
                 else{
                     JOptionPane.showMessageDialog(loginFrame, "Invalid username or password");

@@ -7,8 +7,10 @@ import java.util.Vector;
 public class ViewAllEmployee extends JFrame {
     JTable employeeTable;
     JLabel mainHeadingLabel;
+    Connectionclass connectionclass;
 
     ViewAllEmployee() {
+        connectionclass = new Connectionclass();
         setLayout(new FlowLayout());
         ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/print.jpg").getImage().getScaledInstance(700, 700, Image.SCALE_DEFAULT));
         JLabel backgroundImageLabel = new JLabel(backgroundImage);
@@ -38,7 +40,7 @@ public class ViewAllEmployee extends JFrame {
 
     private void loadAllEmployees() {
         try {
-            Connectionclass connectionclass = new Connectionclass();
+            // Connectionclass connectionclass = new Connectionclass();
             PreparedStatement ps = connectionclass.conn.prepareStatement("SELECT * FROM Employee");
             ResultSet rs = ps.executeQuery();
             employeeTable.setModel(buildTableModel(rs));

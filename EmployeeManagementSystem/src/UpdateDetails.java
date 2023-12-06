@@ -14,11 +14,13 @@ public class UpdateDetails extends JFrame implements ActionListener {
 
     public UpdateDetails() {
         connection = new Connectionclass();
-        ImageIcon backgroundImage = new ImageIcon(new ImageIcon("/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/remove.jpg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT));
+        ImageIcon backgroundImage = new ImageIcon(new ImageIcon(
+                "/home/abdullah/Documents/aybees data/FAST/sem5/DB th/project/EmployeeManagementSystem/resources/icons/remove.jpg")
+                .getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT));
         JLabel backgroundImageLabel = new JLabel(backgroundImage);
         backgroundImageLabel.setBounds(0, 0, 500, 500);
         add(backgroundImageLabel);
-        
+
         employeeIdLabel = new JLabel("Employee ID");
         employeeIdLabel.setBounds(50, 50, 150, 30);
         employeeIdLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -92,7 +94,6 @@ public class UpdateDetails extends JFrame implements ActionListener {
         departmentComboBox.setForeground(Color.BLACK);
         backgroundImageLabel.add(departmentComboBox);
 
-
         updateButton = new JButton("Update");
         updateButton.setBounds(150, 350, 150, 30);
         updateButton.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -141,7 +142,8 @@ public class UpdateDetails extends JFrame implements ActionListener {
 
     private void updateDetails(int employeeId) {
         try {
-            PreparedStatement ps = connection.conn.prepareStatement("UPDATE Employee SET address = ?, phone = ?, email = ?, designation = ?, department = ? WHERE employee_id = ?");
+            PreparedStatement ps = connection.conn.prepareStatement(
+                    "UPDATE Employee SET address = ?, phone = ?, email = ?, designation = ?, department = ? WHERE employee_id = ?");
             ps.setString(1, addressField.getText());
             ps.setString(2, phoneField.getText());
             ps.setString(3, emailField.getText());
@@ -151,7 +153,17 @@ public class UpdateDetails extends JFrame implements ActionListener {
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Details updated successfully");
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            // Check if the error is due to the phone number validation trigger
+            if (ex.getSQLState().equals("45000")) {
+                JOptionPane.showMessageDialog(null, "Phone number must have exactly 11 digits", "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Handle other SQL exceptions
+                JOptionPane.showMessageDialog(null, "Error updating employee: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            ex.printStackTrace(); // Print the stack trace for debugging purposes
         }
     }
 
