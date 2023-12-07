@@ -135,9 +135,16 @@ public class DeleteEmployee extends JFrame implements ActionListener {
 
     private void deleteEmployee(int employeeId) {
         try {
-            PreparedStatement ps = connection.conn.prepareStatement("DELETE FROM Employee WHERE employee_id = ?");
-            ps.setInt(1, employeeId);
-            ps.executeUpdate();
+            // Manually delete Attendance records first
+            PreparedStatement deleteAttendance = connection.conn.prepareStatement("DELETE FROM Attendance WHERE employee_id = ?");
+            deleteAttendance.setInt(1, employeeId);
+            deleteAttendance.executeUpdate();
+    
+            // Now you can safely delete the employee
+            PreparedStatement deleteEmployee = connection.conn.prepareStatement("DELETE FROM Employee WHERE employee_id = ?");
+            deleteEmployee.setInt(1, employeeId);
+            deleteEmployee.executeUpdate();
+    
             JOptionPane.showMessageDialog(null, "Employee deleted successfully");
         } catch (SQLException ex) {
             ex.printStackTrace();

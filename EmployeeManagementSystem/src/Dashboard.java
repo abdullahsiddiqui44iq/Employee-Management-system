@@ -116,6 +116,8 @@ public class Dashboard extends JFrame implements ActionListener  {
         applyLeave.addActionListener(this);
         viewLeave.addActionListener(this);
         addSalary.addActionListener(this);
+        salarySlip.addActionListener(this);
+        deleteEmployee.addActionListener(this);
         
 
         logoutItem.addActionListener(this);

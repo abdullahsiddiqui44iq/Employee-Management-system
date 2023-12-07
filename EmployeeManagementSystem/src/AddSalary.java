@@ -11,7 +11,7 @@ public class AddSalary extends JFrame implements ActionListener {
     JDateChooser salaryDateChooser;
     JButton submitButton;
     Connectionclass connection;
-
+    
     public AddSalary() {
         connection = new Connectionclass();
 
